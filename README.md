@@ -1,3 +1,26 @@
+## mrpt_bridge (melodic) - 0.1.25-0
+
+The packages in the `mrpt_bridge` repository were released into the `melodic` distro by running `/usr/bin/bloom-release mrpt_bridge --track melodic --rosdistro melodic` on `Wed, 11 Jul 2018 17:28:19 -0000`
+
+The `mrpt_bridge` package was released.
+
+Version of package(s) in repository `mrpt_bridge`:
+
+- upstream repository: https://github.com/mrpt-ros-pkg/mrpt_bridge.git
+- release repository: https://github.com/mrpt-ros-pkg-release/mrpt_bridge-release.git
+- rosdistro version: `0.1.22-0`
+- old version: `0.1.22-0`
+- new version: `0.1.25-0`
+
+Versions of tools used:
+
+- bloom version: `0.6.4`
+- catkin_pkg version: `0.4.2`
+- rosdep version: `0.12.2`
+- rosdistro version: `0.6.8`
+- vcstools version: `0.1.40`
+
+
 ## mrpt_bridge (kinetic) - 0.1.24-0
 
 The packages in the `mrpt_bridge` repository were released into the `kinetic` distro by running `/usr/bin/bloom-release -t kinetic -r kinetic mrpt_bridge` on `Thu, 14 Jun 2018 07:29:55 -0000`
