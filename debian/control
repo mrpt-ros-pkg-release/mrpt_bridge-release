@@ -1,0 +1,12 @@
+Source: ros-noetic-mrpt-bridge
+Section: misc
+Priority: optional
+Maintainer: Jose-Luis Blanco-Claraco <jlblanco@ual.es>
+Build-Depends: debhelper (>= 9.0.0), libgtest-dev, libpcl-dev, qtbase5-dev, ros-noetic-catkin, ros-noetic-cv-bridge, ros-noetic-geometry-msgs, ros-noetic-marker-msgs, ros-noetic-message-generation, ros-noetic-mrpt-msgs, ros-noetic-mrpt2, ros-noetic-nav-msgs, ros-noetic-pcl-conversions, ros-noetic-roscpp, ros-noetic-rosunit, ros-noetic-sensor-msgs, ros-noetic-std-msgs, ros-noetic-stereo-msgs, ros-noetic-tf
+Homepage: https://wiki.ros.org/mrpt_bridge
+Standards-Version: 3.9.2
+
+Package: ros-noetic-mrpt-bridge
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-noetic-cv-bridge, ros-noetic-geometry-msgs, ros-noetic-marker-msgs, ros-noetic-message-generation, ros-noetic-message-runtime, ros-noetic-mrpt-msgs, ros-noetic-mrpt2, ros-noetic-nav-msgs, ros-noetic-roscpp, ros-noetic-sensor-msgs, ros-noetic-std-msgs, ros-noetic-stereo-msgs, ros-noetic-tf
+Description: C++ library to convert between ROS messages and MRPT classes
