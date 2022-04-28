@@ -1,3 +1,11 @@
+/* +------------------------------------------------------------------------+
+   |                     Mobile Robot Programming Toolkit (MRPT)            |
+   |                          http://www.mrpt.org/                          |
+   |                                                                        |
+   | Copyright (c) 2005-2018, Individual contributors, see AUTHORS file     |
+   | See: http://www.mrpt.org/Authors - All rights reserved.                |
+   | Released under BSD License. See details in http://www.mrpt.org/License |
+   +------------------------------------------------------------------------+ */
 
 #include <geometry_msgs/Pose.h>
 #include <sensor_msgs/LaserScan.h>
@@ -47,8 +55,8 @@ bool convert(
 
 		// set the validity of the scan
 		const bool r_valid =
-			((_obj.scan[i_mrpt] < (_msg.range_max * 0.95)) &&
-			 (_obj.scan[i_mrpt] > _msg.range_min));
+			((_obj.getScanRange(i_mrpt) < (_msg.range_max * 0.95)) &&
+			 (_obj.getScanRange(i_mrpt) > _msg.range_min));
 		_obj.setScanRangeValidity(i_mrpt, r_valid);
 	}
 
@@ -57,14 +65,12 @@ bool convert(
 
 bool convert(const CObservation2DRangeScan& _obj, sensor_msgs::LaserScan& _msg)
 {
-	const size_t nRays = _obj.scan.size();
+	const size_t nRays = _obj.getScanSize();
 	if (!nRays) return false;
-
-	ASSERT_EQUAL_(_obj.scan.size(), _obj.validRange.size());
 
 	_msg.angle_min = -0.5f * _obj.aperture;
 	_msg.angle_max = 0.5f * _obj.aperture;
-	_msg.angle_increment = _obj.aperture / (_obj.scan.size() - 1);
+	_msg.angle_increment = _obj.aperture / (_obj.getScanSize() - 1);
 
 	// setting the following values to zero solves a rviz visualization problem
 	_msg.time_increment = 0.0;  // 1./30.; // Anything better?
@@ -74,7 +80,7 @@ bool convert(const CObservation2DRangeScan& _obj, sensor_msgs::LaserScan& _msg)
 	_msg.range_max = _obj.maxRange;
 
 	_msg.ranges.resize(nRays);
-	for (size_t i = 0; i < nRays; i++) _msg.ranges[i] = _obj.scan[i];
+	for (size_t i = 0; i < nRays; i++) _msg.ranges[i] = _obj.getScanRange(i);
 
 	// Set header data:
 	mrpt_bridge::convert(_obj.timestamp, _msg.header.stamp);
@@ -93,4 +99,4 @@ bool convert(
 	convert(pose, _pose);
 	return true;
 }
-}  // end namespace
+}  // namespace mrpt_bridge

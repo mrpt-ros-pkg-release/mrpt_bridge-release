@@ -1,3 +1,12 @@
+/* +------------------------------------------------------------------------+
+   |                     Mobile Robot Programming Toolkit (MRPT)            |
+   |                          http://www.mrpt.org/                          |
+   |                                                                        |
+   | Copyright (c) 2005-2018, Individual contributors, see AUTHORS file     |
+   | See: http://www.mrpt.org/Authors - All rights reserved.                |
+   | Released under BSD License. See details in http://www.mrpt.org/License |
+   +------------------------------------------------------------------------+ */
+
 /*
  * pose.cpp
  *
@@ -6,13 +15,10 @@
  *
  *      To understand better how this is implemented see the references:
  *      - http://www.mrpt.org/2D_3D_Geometry
- *
  */
 
 /**
 \mainpage
-
-\htmlinclude manifest.html
 
 \b mrpt_bridge is a set of functions to convert between common ROS messages and
 MRPT C++ classes.
@@ -30,11 +36,10 @@ MRPT C++ classes.
 #include <geometry_msgs/PoseWithCovariance.h>
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Quaternion.h>
-#include <mrpt/math/CMatrixFixedNumeric.h>
 #include <tf/tf.h>
 
 #include <mrpt/version.h>
-#if MRPT_VERSION<0x199
+#if MRPT_VERSION < 0x199
 #include <mrpt/utils/mrpt_macros.h>
 #else
 #include <mrpt/core/exceptions.h>
@@ -176,7 +181,6 @@ geometry_msgs::Pose& mrpt_bridge::convert(
 
 	return _des;
 }
-
 
 /** Convert: MRPT's TPose2D (x,y,yaw) -> ROS's Pose */
 geometry_msgs::Pose& mrpt_bridge::convert(
@@ -338,6 +342,15 @@ mrpt::poses::CQuaternionDouble& mrpt_bridge::convert(
 	_des.y(_src.y);
 	_des.z(_src.z);
 	_des.r(_src.w);
+	// Ensure the real part of the quaternion is >=0.
+	// It seems ROS does not always ensure it.
+	if (_des.r() < 0)
+	{
+		_des.r(-_des.r());
+		_des.x(-_des.x());
+		_des.y(-_des.y());
+		_des.z(-_des.z());
+	}
 	return _des;
 }
 
@@ -355,9 +368,19 @@ geometry_msgs::Quaternion& mrpt_bridge::convert(
 mrpt::poses::CPose3D& mrpt_bridge::convert(
 	const geometry_msgs::Pose& _src, mrpt::poses::CPose3D& _des)
 {
-	const mrpt::math::CQuaternionDouble q(
+	mrpt::math::CQuaternionDouble q(
 		_src.orientation.w, _src.orientation.x, _src.orientation.y,
 		_src.orientation.z);
+	// Ensure the real part of the quaternion is >=0.
+	// It seems ROS does not always ensure it.
+	if (q.r() < 0)
+	{
+		q.r(-q.r());
+		q.x(-q.x());
+		q.y(-q.y());
+		q.z(-q.z());
+	}
+
 	_des = mrpt::poses::CPose3D(
 		q, _src.position.x, _src.position.y, _src.position.z);
 
