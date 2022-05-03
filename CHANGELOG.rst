@@ -2,6 +2,13 @@
 Changelog for package mrpt_bridge
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.0.1 (2022-05-03)
+------------------
+* Add License file
+* Formatting fixes
+* Update README.md
+* Contributors: Jose Luis Blanco Claraco
+
 1.0.0 (2022-03-04)
 ------------------
 * update dep to mrpt2
